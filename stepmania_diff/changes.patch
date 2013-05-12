@@ -1,0 +1,65 @@
+diff -r 340f344e424b src/NoteDisplay.cpp
+--- a/src/NoteDisplay.cpp	Sat Sep 29 23:20:00 2012 -0400
++++ b/src/NoteDisplay.cpp	Sun May 12 20:11:30 2013 +0200
+@@ -13,6 +13,7 @@
+ #include "LuaBinding.h"
+ #include "Foreach.h"
+ #include "RageMath.h"
++#include "StepmaniaToSolver.h"
+ 
+ const RString& NoteNotePartToString( NotePart i );
+ /** @brief A foreach loop going through the different NoteParts. */
+@@ -739,6 +740,9 @@
+ 	{
+ 		DISPLAY->TexturePopMatrix();
+ 	}
++    
++    // contribution bsmulders
++    STS->Note(fX, fY);
+ }
+ 
+ void NoteDisplay::DrawTap(const TapNote& tn, int iCol, float fBeat,
+diff -r 340f344e424b src/NoteField.cpp
+--- a/src/NoteField.cpp	Sat Sep 29 23:20:00 2012 -0400
++++ b/src/NoteField.cpp	Sun May 12 20:11:30 2013 +0200
+@@ -20,6 +20,7 @@
+ #include "Course.h"
+ #include "NoteData.h"
+ #include "RageDisplay.h"
++#include "StepmaniaToSolver.h"
+ 
+ float FindFirstDisplayedBeat( const PlayerState* pPlayerState, int iDrawDistanceAfterTargetsPixels );
+ float FindLastDisplayedBeat( const PlayerState* pPlayerState, int iDrawDistanceBeforeTargetsPixels );
+@@ -811,6 +812,9 @@
+ 
+ void NoteField::DrawPrimitives()
+ {
++    // contribution bsmulders
++    STS->Vsync();
++
+ 	//LOG->Trace( "NoteField::DrawPrimitives()" );
+ 
+ 	// This should be filled in on the first update.
+diff -r 340f344e424b src/StepMania.cpp
+--- a/src/StepMania.cpp	Sat Sep 29 23:20:00 2012 -0400
++++ b/src/StepMania.cpp	Sun May 12 20:11:30 2013 +0200
+@@ -13,6 +13,7 @@
+ #include "RageDisplay.h"
+ #include "RageThreads.h"
+ #include "LocalizedString.h"
++#include "StepmaniaToSolver.h"
+ 
+ #include "arch/ArchHooks/ArchHooks.h"
+ #include "arch/LoadingWindow/LoadingWindow.h"
+@@ -952,7 +953,10 @@
+ 	
+ 	// Set this up next. Do this early, since it's needed for RageException::Throw.
+ 	LOG		= new RageLog;
+-
++    
++    // contribution bsmulders
++    STS     = new StepmaniaToSolver;
++ 
+ 	// Whew--we should be able to crash safely now!
+ 
+ 	// load preferences and mount any alternative trees.
