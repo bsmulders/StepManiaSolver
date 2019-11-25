@@ -1,4 +1,4 @@
-# StepManiaSolver
+# StepMania Solver
 ## License
 Copyright (c) 2013, Bobbie Smulders
 
